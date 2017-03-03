@@ -306,3 +306,31 @@ func TestScanPidLine(t *testing.T) {
 		}
 	}
 }
+
+func TestLockAlreadyHeldByProcess(t *testing.T) {
+	path, err := filepath.Abs("test_lockfile.pid")
+	if err != nil {
+		panic(err)
+	}
+
+	lf, err := New(path)
+	if err != nil {
+		t.Error("Error making lockfile: ", err)
+		return
+	}
+
+	if err := lf.TryLock(); err != nil {
+		t.Error("Error locking lockfile: ", err)
+		return
+	}
+
+	if err := lf.TryLock(); err != ErrBusy {
+		t.Error("Lock should busy: ", err)
+		return
+	}
+
+	if err := lf.Unlock(); err != nil {
+		t.Error("Error unlocking locfile: ", err)
+		return
+	}
+}

@@ -129,15 +129,17 @@ func (l Lockfile) TryLock() error {
 		return nil
 	}
 
-	proc, err := l.GetOwner()
+	_, err = l.GetOwner()
 	switch err {
 	default:
 		// Other errors -> defensively fail and let caller handle this
 		return err
 	case nil:
-		if proc.Pid != os.Getpid() {
-			return ErrBusy
-		}
+		// This fork differs from the upstream repository in this line. We do
+		// not want a process to obtain a lock if this lock is already help by
+		// the same process. Therefore, we always return ErrBusy if the lockfile
+		// contains a non-dead PID.
+		return ErrBusy
 	case ErrDeadOwner, ErrInvalidPid:
 		// cases we can fix below
 	}
