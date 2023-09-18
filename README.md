@@ -24,14 +24,6 @@ Contributing
 ------------
 
 Contributions are welcome. Please open an issue or send me a pull request for a dedicated branch.
-Make sure the git commit hooks show it works.
-
-git commit hooks
------------------------
-enable commit hooks via
-
-        cd .git ; rm -rf hooks; ln -s ../git-hooks hooks ; cd ..
-
 
 License
 -------
