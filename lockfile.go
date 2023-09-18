@@ -138,6 +138,10 @@ func (l Lockfile) TryLock() error {
 	_, err = l.GetOwner()
 	switch err {
 	default:
+		if os.IsNotExist(err) {
+			// tell user that a retry would be a good idea
+			return ErrNotExist
+		}
 		// Other errors -> defensively fail and let caller handle this
 		return err
 	case nil:
