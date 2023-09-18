@@ -1,3 +1,3 @@
-module github.com/Acconut/lockfile
+module github.com/tus/lockfile
 
 go 1.20
