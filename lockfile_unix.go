@@ -1,4 +1,4 @@
-// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris
+// +build darwin dragonfly freebsd linux nacl netbsd openbsd solaris aix
 
 package lockfile
 
@@ -16,5 +16,6 @@ func isRunning(pid int) (bool, error) {
 	if err := proc.Signal(syscall.Signal(0)); err != nil {
 		return false, nil
 	}
+
 	return true, nil
 }
