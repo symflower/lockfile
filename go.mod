@@ -1,3 +1,3 @@
-module github.com/tus/lockfile
+module github.com/symflower/lockfile
 
 go 1.20
